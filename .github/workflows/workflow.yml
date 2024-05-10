@@ -18,5 +18,13 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Install requests
+        run: pip install requests
+
       - name: Output a secret
         run: echo ${{ secrets.SUPER_SECRET }}
+
+      - name: Run script
+        run: python script.py
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
