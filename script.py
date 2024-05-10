@@ -13,7 +13,8 @@ def encrypt(public_key: str, secret_value: str) -> str:
     return b64encode(encrypted).decode("utf-8")
 
 
-print("this is a secret")
+new_secret = "this is the new secret"
+print(new_secret)
 
 
 api_base_url = "https://api.github.com/repos/andylolz/github-secrets-test"
@@ -30,9 +31,11 @@ public_key, key_id = j["key"], j["key_id"]
 
 url = f"{api_base_url}/actions/secrets/SUPER_SECRET"
 payload = {
-    "encrypted_value": encrypt(public_key, "TODO: encrypt it"),
+    "encrypted_value": encrypt(public_key, new_secret),
     "key_id": key_id,
 }
 resp = requests.put(url, headers=headers, data=json.dumps(payload))
 resp.raise_for_status()
 print(resp.status_code)
+
+print(new_secret)
