@@ -28,7 +28,6 @@ jobs:
       - name: Run script
         run: python script.py
         env:
-          PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Output secret again
