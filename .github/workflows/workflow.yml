@@ -4,9 +4,6 @@ on:
   push:
   workflow_dispatch:
 
-permissions:
-  secrets: write
-
 jobs:
   workflow:
     runs-on: ubuntu-latest
@@ -28,4 +25,4 @@ jobs:
       - name: Run script
         run: python script.py
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
