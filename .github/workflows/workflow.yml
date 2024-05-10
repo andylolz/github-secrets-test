@@ -1,6 +1,7 @@
 name: Working with GitHub secrets
 
 on:
+  push:
   workflow_dispatch:
 
 # permissions:
