@@ -1,3 +1,6 @@
+import hashlib
+from random import choice
+import string
 import json
 from base64 import b64encode
 from os import environ
@@ -13,21 +16,20 @@ def encrypt(public_key: str, secret_value: str) -> str:
     return b64encode(encrypted).decode("utf-8")
 
 
-new_secret = "this is the new secret"
-print(new_secret)
+current_secret = environ["SUPER_SECRET"]
+print(f"current secret: " + current_secret)
+print("hash: " + hashlib.md5(current_secret.encode()).hexdigest())
 
 
+new_secret = "".join(choice(string.ascii_lowercase + string.digits) for _ in range(20))
 api_base_url = "https://api.github.com/repos/andylolz/github-secrets-test"
-token = environ["GH_TOKEN"]
 headers = {
-    "Authorization": f"Bearer {token}",
-    "Accept": "application/vnd.github.v3+json"
+    "Authorization": "Bearer " + environ["GH_TOKEN"],
 }
 
 url = f"{api_base_url}/actions/secrets/public-key"
 j = requests.get(url, headers=headers).json()
 public_key, key_id = j["key"], j["key_id"]
-
 
 url = f"{api_base_url}/actions/secrets/SUPER_SECRET"
 payload = {
@@ -36,6 +38,3 @@ payload = {
 }
 resp = requests.put(url, headers=headers, data=json.dumps(payload))
 resp.raise_for_status()
-print(resp.status_code)
-
-print(new_secret)

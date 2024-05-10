@@ -20,17 +20,8 @@ jobs:
       - name: Install requirements
         run: pip install -r requirements.txt
 
-      - name: Output secret
-        run: |
-          echo 'this is a secret'
-          echo ${{ secrets.SUPER_SECRET }}
-
       - name: Run script
         run: python script.py
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: Output secret again
-        run: |
-          echo 'this is a secret'
-          echo ${{ secrets.SUPER_SECRET }}
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
