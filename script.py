@@ -24,13 +24,14 @@ headers = {
 }
 
 url = f"{api_base_url}/actions/secrets/public-key"
-resp = requests.get(url, headers=headers)
-public_key = resp.json()["key"]
+j = requests.get(url, headers=headers).json()
+public_key, key_id = j["key"], j["key_id"]
 
 
 url = f"{api_base_url}/actions/secrets/SUPER_SECRET"
 payload = {
-    "encrypted_value": encrypt(public_key, "TODO: encrypt it")
+    "encrypted_value": encrypt(public_key, "TODO: encrypt it"),
+    "key_id": key_id,
 }
 resp = requests.put(url, headers=headers, data=json.dumps(payload))
 resp.raise_for_status()
