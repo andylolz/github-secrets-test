@@ -1,7 +1,6 @@
 import hashlib
 from random import choice
 import string
-import json
 from base64 import b64encode
 from os import environ
 from nacl import encoding, public
@@ -17,7 +16,7 @@ def encrypt(public_key: str, secret_value: str) -> str:
 
 
 current_secret = environ["SUPER_SECRET"]
-print(f"current secret: " + current_secret)
+print("current secret: " + current_secret)
 print("hash: " + hashlib.md5(current_secret.encode()).hexdigest())
 
 
@@ -36,5 +35,5 @@ payload = {
     "encrypted_value": encrypt(public_key, new_secret),
     "key_id": key_id,
 }
-resp = requests.put(url, headers=headers, data=json.dumps(payload))
+resp = requests.put(url, headers=headers, json=payload)
 resp.raise_for_status()
