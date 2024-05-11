@@ -27,7 +27,9 @@ headers = {
 }
 
 url = f"{api_base_url}/actions/secrets/public-key"
-j = requests.get(url, headers=headers).json()
+resp = requests.get(url, headers=headers)
+resp.raise_for_status()
+j = resp.json()
 public_key, key_id = j["key"], j["key_id"]
 
 url = f"{api_base_url}/actions/secrets/SUPER_SECRET"
